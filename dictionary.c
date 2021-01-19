@@ -25,11 +25,14 @@ bool check(const char *word)
     return false;
 }
 
-// Hashes word to a number
+// Hashes word to a number https://gist.github.com/MohamedTaha98/ccdf734f13299efb73ff0b12f7ce429f
 unsigned int hash(const char *word)
 {
-    // TODO
-    return 0;
+    unsigned long hash = 5381;
+        int c;
+        while ((c = *wordr++))
+            hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+        return hash % NUM_BUCKETS;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
