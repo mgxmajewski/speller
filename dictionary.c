@@ -30,15 +30,17 @@ unsigned int hash(const char *word)
 {
     unsigned long hash = 5381;
         int c;
-        while ((c = *wordr++))
+        while ((c = *word++))
             hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-        return hash % NUM_BUCKETS;
+        return hash % N;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary)
 {
-    // TODO
+    
+    
+    
     return false;
 }
 
