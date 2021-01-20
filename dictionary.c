@@ -43,6 +43,15 @@ bool load(const char *dictionary)
     dictionary = fopen(*dictionary, "r");
     // Read strings from file one at the time
     int count = fread(&dictionary, sizeof(*word), 1, stream);
+    while (fscanf(file, s%, word) != EOF)
+    {
+        
+    }
+    
+    
+
+    
+    
     // Create a new node for each word
     node *n = malloc(sizeof(node));
     strcpy(n->word, word);
