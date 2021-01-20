@@ -40,26 +40,29 @@ bool load(const char *dictionary)
 {
     // TODO
     // Open dictionary file
-    dictionary = fopen(*dictionary, "r");
-    // Read strings from file one at the time
-    int count = fread(&dictionary, sizeof(*word), 1, stream);
-    while (fscanf(file, s%, word) != EOF)
+    FILE *pdictionary = fopen(*dictionary, "r");
+    if (pdictionary == NULL)
     {
+        return false;
+    }
+    else
+    {
+        // Read strings from file one at the time
+        while (fscanf(file, s%, word) != EOF)
+        {
+            node *n = malloc(sizeof(node));
+            strcpy(n->word, word);
+        }
         
+        // Create a new node for each word
+       
+        n->next = NULL;
+        // Hash word to obtain a hash value
+        // Insert node into hash table at that location
+    
+        return true;
     }
     
-    
-
-    
-    
-    // Create a new node for each word
-    node *n = malloc(sizeof(node));
-    strcpy(n->word, word);
-    n->next = NULL;
-    // Hash word to obtain a hash value
-    // Insert node into hash table at that location
-
-    return false;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
