@@ -40,7 +40,9 @@ bool load(const char *dictionary)
 {
     // TODO
     // Open dictionary file
+    dictionary = fopen(*dictionary, "r");
     // Read strings from file one at the time
+    int count = fread(&dictionary, sizeof(*word), 1, stream);
     // Create a new node for each word
     node *n = malloc(sizeof(node));
     strcpy(n->word, word);
