@@ -28,6 +28,10 @@ int word_count = 0;
 bool check(const char *word)
 {
     // TODO
+    int hash_of_checked_word = hash(word);
+    
+    node *checked_bucket = table[hash_of_checked_word];
+    
     return false;
 }
 
@@ -73,7 +77,7 @@ bool load(const char *dictionary)
                     n->next = table[bucket];
                    
                     table[bucket] = n;
-                    word_count==;
+                    word_count++;
                 // }
                 // else
                 // {
