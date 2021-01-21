@@ -17,7 +17,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 1;
+const unsigned int N = 1000;
 
 // Hash table
 node *table[N];
@@ -51,7 +51,7 @@ bool load(const char *dictionary)
     }
     else
     {
-        char *loaded_word = NULL;
+        char loaded_word[LENGTH + 1];
         // Read strings from file one at the time
         while (fscanf(file, "%s", loaded_word) != EOF)
         {
