@@ -47,22 +47,33 @@ bool load(const char *dictionary)
     }
     else
     {
+        char *tmp;
         // Read strings from file one at the time
-        while (fscanf(file, s%, tmp) != EOF)
+        while (fscanf(file, "s%", tmp) != EOF)
         {
-            char *tmp;
+            // Create a new node for each word
             node *n = malloc(sizeof(node));
-            strcpy(n->word, tmp);
-            n->next = NULL; // here need to point to first node in bucket
+            if (node == NULL)
+            {
+                return false;
+            }
+            else
+            {
+                // Hash word to obtain a hash value
+                int bucket = hash(*tmp);
+                if (table[bucket] != NULL)
+                {
+                    // Insert node into hash table at that location
+                }
+                else
+                {
+                    //Add node as last node
+                    strcpy(n->word, tmp);
+                    n->next = NULL; // here need to point to first node in bucket
+                }
+            }
+           
         }
-        
-        // Create a new node for each word
-       
-        
-        // Hash word to obtain a hash value
-        int bucket = hash(*tmp);
-        // Insert node into hash table at that location
-    
         return true;
     }
     
