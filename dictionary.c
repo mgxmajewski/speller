@@ -45,7 +45,7 @@ bool load(const char *dictionary)
     // TODO
     // Open dictionary file
     FILE *file = fopen(dictionary, "r");
-    if (file == NULL)
+    if (dictionary == NULL)
     {
         return false;
     }
@@ -61,25 +61,27 @@ bool load(const char *dictionary)
             {
                 return false;
             }
-            else
-            {
+            // else
+            // {
                 // Hash word to obtain a hash value
                 int bucket = hash(loaded_word);
-                if (table[bucket] != NULL)
-                {
-                    n->next = table[bucket];
+                //if (table[bucket] != NULL)
+                //{
                     strcpy(n->word, loaded_word);// Insert node into hash table at that location
+                    n->next = table[bucket];
+                   
                     table[bucket] = n;
-                }
-                else
-                {
-                    //Add node as first/last node
-                    table[bucket] = n;
-                    strcpy(n->word, loaded_word);
-                    n->next = NULL; // here need to point to first node in bucket
-                }
-            }
+                // }
+                // else
+                // {
+                //     //Add node as first/last node
+                //     table[bucket] = n;
+                //     strcpy(n->word, loaded_word);
+                //     n->next = NULL; // here need to point to first node in bucket
+                // }
+            // }
         }
+        fclose(file);
         return true;
     }
     
