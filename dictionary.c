@@ -33,7 +33,7 @@ bool check(const char *word)
     
     node *checked_bucket = table[hash_of_checked_word];
     
-    while(checked_bucket-> next != NULL)
+    while(checked_bucket != NULL)
     {
         if (strcasecmp(word, checked_bucket->word) == 0)
         {
@@ -111,6 +111,24 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    // TODO
+    for  (int i = 0; i < N; i++)
+    {
+    node *free_bucket = table[i];
+    
+   
+    
+    while(free_bucket != NULL)
+    {
+        node *tmp = free_bucket;
+        free_bucket = free_bucket->next;
+        free(tmp); 
+    }
+    
+    if (free_bucket == NULL)
+    {
+        return true;
+    }
+    
+    }
     return false;
 }
