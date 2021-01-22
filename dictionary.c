@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <strings.h>
+#include <ctype.h>
 
 #include "dictionary.h"
 
@@ -39,18 +40,23 @@ bool check(const char *word)
         {
             return true;
         }
+        //checked_bucket = checked_bucket->next;
     }
     return false;
 }
 
 // Hashes word to a number https://gist.github.com/MohamedTaha98/ccdf734f13299efb73ff0b12f7ce429f
+//https://github.com/hathix/cs50-section/blob/master/code/7/sample-hash-functions/good-hash-function.c
 unsigned int hash(const char *word)
 {
-    unsigned long hash = 5381;
-        int c;
-        while ((c = *word++))
-            hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-        return hash % N;
+   unsigned long hash = 5381;
+
+     for (const char* ptr = word; *ptr != '\0'; ptr++)
+     {
+         hash = ((hash << 5) + hash) + tolower(*ptr);
+     }
+
+     return hash % N;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -97,9 +103,9 @@ bool load(const char *dictionary)
             // }
         }
         fclose(file);
-        return true;
+        
     }
-    
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
@@ -115,8 +121,6 @@ bool unload(void)
     {
     node *free_bucket = table[i];
     
-   
-    
     while(free_bucket != NULL)
     {
         node *tmp = free_bucket;
@@ -124,7 +128,7 @@ bool unload(void)
         free(tmp); 
     }
     
-    if (free_bucket == NULL)
+    if (i == N - 1)
     {
         return true;
     }
