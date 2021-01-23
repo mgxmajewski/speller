@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 5381;
+const unsigned int N = 200000;
 
 // Hash table
 node *table[N];
@@ -40,7 +40,7 @@ bool check(const char *word)
         {
             return true;
         }
-        //checked_bucket = checked_bucket->next;
+        checked_bucket = checked_bucket->next;
     }
     return false;
 }
