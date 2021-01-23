@@ -18,7 +18,7 @@ typedef struct node
 node;
 
 // Number of buckets in hash table
-const unsigned int N = 1000;
+const unsigned int N = 5381;
 
 // Hash table
 node *table[N];
@@ -34,7 +34,7 @@ bool check(const char *word)
     
     node *checked_bucket = table[hash_of_checked_word];
     
-    while(checked_bucket != NULL)
+    while (checked_bucket != NULL)
     {
         if (strcasecmp(word, checked_bucket->word) == 0)
         {
@@ -49,14 +49,14 @@ bool check(const char *word)
 //https://github.com/hathix/cs50-section/blob/master/code/7/sample-hash-functions/good-hash-function.c
 unsigned int hash(const char *word)
 {
-   unsigned long hash = 5381;
+    unsigned long hash = 5381;
 
-     for (const char* ptr = word; *ptr != '\0'; ptr++)
-     {
-         hash = ((hash << 5) + hash) + tolower(*ptr);
-     }
+    for (const char *ptr = word; *ptr != '\0'; ptr++)
+    {
+        hash = ((hash << 5) + hash) + tolower(*ptr);
+    }
 
-     return hash % N;
+    return hash % N;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -65,13 +65,19 @@ bool load(const char *dictionary)
     // TODO
     // Open dictionary file
     FILE *file = fopen(dictionary, "r");
+    
+    // Return false if there is no dictionary
     if (dictionary == NULL)
     {
         return false;
     }
+    
+    // If there is dictionary word is put into right 'bucket'
     else
     {
+        // Delclare string size of word
         char loaded_word[LENGTH + 1];
+        
         // Read strings from file one at the time
         while (fscanf(file, "%s", loaded_word) != EOF)
         {
@@ -81,26 +87,21 @@ bool load(const char *dictionary)
             {
                 return false;
             }
-            // else
-            // {
-                // Hash word to obtain a hash value
-                int bucket = hash(loaded_word);
-                //if (table[bucket] != NULL)
-                //{
-                    strcpy(n->word, loaded_word);// Insert node into hash table at that location
-                    n->next = table[bucket];
-                   
-                    table[bucket] = n;
-                    word_count++;
-                // }
-                // else
-                // {
-                //     //Add node as first/last node
-                //     table[bucket] = n;
-                //     strcpy(n->word, loaded_word);
-                //     n->next = NULL; // here need to point to first node in bucket
-                // }
-            // }
+            
+            // Hash loaded word to get right bucket index
+            int bucket = hash(loaded_word);
+
+            // Copy loaded word (string) into 'word' of new node 
+            strcpy(n->word, loaded_word);
+            
+            // Insert node into hash table at that location
+            n->next = table[bucket];
+           
+            // Add new node to the right bucket
+            table[bucket] = n; 
+            
+            // Increment word counter
+            word_count++;
         }
         fclose(file);
         
@@ -117,21 +118,28 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    for  (int i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
-    node *free_bucket = table[i];
     
-    while(free_bucket != NULL)
-    {
-        node *tmp = free_bucket;
-        free_bucket = free_bucket->next;
-        free(tmp); 
-    }
+        // Create pointers to all buckets
+        node *free_bucket = table[i];
+        
+        // Loop throgh every elemnt in 'buckets' linked list
+        while (free_bucket != NULL)
+        {
+            // Create temporary pointer to let free_bucket pointer be able to point to next node
+            node *tmp = free_bucket;
+            
+            // Assign free_bucket to the next node
+            free_bucket = free_bucket->next;
+            free(tmp); 
+        }
     
-    if (i == N - 1)
-    {
-        return true;
-    }
+        // Condition to return true when all nodes are free
+        if (i == N - 1)
+        {
+            return true;
+        }
     
     }
     return false;
